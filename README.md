@@ -8,6 +8,7 @@ AVISO IMPORTANTE:
 Este aplicativo permite escrever diretamente setores físicos do disco, o que pode corromper o sistema operacional, arquivos, partições ou até tornar o PC não inicializável.
 Use-o somente em ambientes controlados e com conhecimento adequado.
 
+
 Funcionalidades:
 
 Leitura e Navegação
@@ -19,6 +20,7 @@ Leitura setor a setor (512 bytes por setor).
 Exibição dos dados em formato hexadecimal organizado em linhas de 16 bytes.
 
 Exibição simultânea em ASCII.
+
 
 Navegação:
 
@@ -42,6 +44,7 @@ Atualização automática da coluna ASCII.
 
 Destaque no status indicando qual offset foi alterado.
 
+
 Requisitos:
 
 Windows
@@ -54,11 +57,13 @@ Suporte à linguagem C#
 
 Abrir o Visual Studio como Administrador
 
+
 Clone o repositório:
 
 Na pagina principal tem uma opção que diz clonar repositório só clicar nela e colar o link do projeto.
 
 Clique em Start ou pressione F5 para executar.
+
 
 
 Como Usar o DiskEditor:
@@ -73,6 +78,7 @@ Navegação
 
 O conteúdo é automaticamente dividido em setores de 512 bytes.
 
+
 Use:
 
 Prev Sector
@@ -80,6 +86,7 @@ Prev Sector
 Next Sector
 
 O setor atual é exibido na barra inferior.
+
 
 Busca:
 
@@ -93,11 +100,13 @@ Aceita decimal ou hexadecimal
 
 Exemplo: 512 ou 0x200
 
+
 Edição:
 
 Clique em qualquer byte na tabela para alterar seu valor
 
 Clique em Save para gravar as mudanças no arquivo
+
 
 Tecnologias Utilizadas:
 
