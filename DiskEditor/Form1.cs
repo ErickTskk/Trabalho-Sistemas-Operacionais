@@ -10,15 +10,17 @@ namespace DiskEditor
 {
     public partial class Form1 : Form
     {
+        //definição que cada linha vai mostrar 16 bytes e cada setor 512 bytes(padrão)
         const int BYTES_PER_ROW = 16;
         const int SECTOR_SIZE = 512;
 
-        byte[] data = Array.Empty<byte>();
-        string? currentPath = null;
-        long currentOffset = 0;
-        int currentSector = 0;
-        DriveInfo? selectedDrive = null;
+        byte[] data = Array.Empty<byte>(); // armazena os 512 bites do setor atual
+        string? currentPath = null; //guarda o caminho do disco atual
+        long currentOffset = 0; // deslocamento do disco
+        int currentSector = 0; // número do setor atual
+        DriveInfo? selectedDrive = null; //Drive escolhido
 
+        // Parte visual, botões e barra de busca
         DataGridView grid = new DataGridView();
         StatusStrip status = new StatusStrip();
         ToolStripStatusLabel statusLabel = new ToolStripStatusLabel();
@@ -31,7 +33,7 @@ namespace DiskEditor
         Button prevSectorBtn = new Button();
         Button nextSectorBtn = new Button();
 
-        // Referência aos botões para manipulação de estado
+        // Referência aos botões para manipulação do disco
         Button openBtn = new Button();
         Button saveBtn = new Button();
         Button closeBtn = new Button();
@@ -42,6 +44,8 @@ namespace DiskEditor
             BuildUI();
         }
 
+
+        //Build da interface
         private void BuildUI()
         {
             this.Text = "Disk Editor";
@@ -56,14 +60,14 @@ namespace DiskEditor
             closeBtn.Text = "Close"; closeBtn.AutoSize = true;
 
             openBtn.Click += OpenBtn_Click;
-            saveBtn.Click += SaveBtn_Click; // Será usado para salvar o setor editado
+            saveBtn.Click += SaveBtn_Click;
             closeBtn.Click += CloseBtn_Click;
 
             topPanel.Controls.Add(openBtn);
             topPanel.Controls.Add(saveBtn);
             topPanel.Controls.Add(closeBtn);
 
-            // --- Botões de navegação ---
+            // Botões de navegação
             prevSectorBtn.Text = "<< Sector"; prevSectorBtn.AutoSize = true; prevSectorBtn.Enabled = false;
             prevSectorBtn.Click += PrevSectorBtn_Click;
 
@@ -72,7 +76,6 @@ namespace DiskEditor
 
             topPanel.Controls.Add(prevSectorBtn);
             topPanel.Controls.Add(nextSectorBtn);
-            // ----------------------------------
 
             topPanel.Controls.Add(new Label { Text = "Offset (hex ou dec):", AutoSize = true, TextAlign = ContentAlignment.MiddleLeft });
             gotoBox.Width = 120;
@@ -88,7 +91,6 @@ namespace DiskEditor
             topPanel.Controls.Add(findBox);
             topPanel.Controls.Add(findBtn);
 
-            // === Cabeçalho Fixo ===
             var headerPanel = new Panel
             {
                 Dock = DockStyle.Top,
@@ -124,7 +126,7 @@ namespace DiskEditor
                 TextAlign = ContentAlignment.MiddleLeft
             });
 
-            // === GRID ===
+            // Grid de dados
             grid.Dock = DockStyle.Fill;
             grid.AllowUserToAddRows = false;
             grid.RowHeadersVisible = false;
@@ -142,36 +144,29 @@ namespace DiskEditor
             grid.CellEndEdit += Grid_CellEndEdit;
             grid.CellDoubleClick += Grid_CellDoubleClick;
 
-            // === Status bar ===
             status.Items.Add(statusLabel);
-            statusLabel.Text = "Nenhum arquivo/disco carregado";
+            statusLabel.Text = "Nenhum disco carregado";
 
-            // === Ordem de adição ===
             this.Controls.Add(grid);
             this.Controls.Add(headerPanel);
             this.Controls.Add(topPanel);
             this.Controls.Add(status);
         }
 
-        // =========================================================================
-        // === MÉTODOS DE MANIPULAÇÃO DE DISCO/ARQUIVO ===
-        // =========================================================================
 
         private void OpenBtn_Click(object? sender, EventArgs e)
         {
-            // Lógica de seleção de drives (mantida)
+            // Lista todos os Drives disponíveis, exceto CD/DVD
             var drives = DriveInfo.GetDrives().Where(d => d.DriveType != DriveType.CDRom).ToArray();
-            // ... (restante da lógica de seleção de drives, criando driveSelectorForm, etc.)
-            // Removido para concisão, assumindo que a seleção funciona.
-
+            
             using var driveSelectorForm = new Form
             {
                 Text = "Select Drive",
                 StartPosition = FormStartPosition.CenterParent,
                 ClientSize = new Size(400, 200)
             };
-            // ... (Código do ListView para seleção de drives)
-
+            
+            // cria um listView para mostrar os valores dos Drives
             var listView = new ListView { Dock = DockStyle.Fill, View = View.Details, FullRowSelect = true };
             listView.Columns.Add("Nome", 50);
             listView.Columns.Add("Tipo", 80);
@@ -179,7 +174,10 @@ namespace DiskEditor
             listView.Columns.Add("Formato", 80);
             listView.Columns.Add("Tamanho", 80);
 
+            // Converte os bites para GB
             var unMedida = 1024 * 1024 * 1024;
+
+            // Preenchimento do listView
             foreach (var driveInfo in drives)
             {
                 var item = new ListViewItem(driveInfo.Name);
@@ -220,13 +218,13 @@ namespace DiskEditor
                 data = Array.Empty<byte>();
                 currentPath = selectedDrive.Name;
                 currentSector = 0;
-
+                // leitura do setor 0
                 if (ReadSector(0))
                 {
                     statusLabel.Text = $"{selectedDrive.Name} - Setor {currentSector} (Offset 0x{currentOffset:X})";
                     nextSectorBtn.Enabled = true;
                     prevSectorBtn.Enabled = false;
-                    saveBtn.Enabled = true; // HABILITA SALVAR PARA ESCRITA EM DISCO
+                    saveBtn.Enabled = true;
                 }
                 else
                 {
@@ -235,25 +233,27 @@ namespace DiskEditor
             }
         }
 
+        // fecha o disco atual
         private void CloseBtn_Click(object? sender, EventArgs e)
         {
-            var ans = MessageBox.Show("Fechar disco/arquivo atual?", "Fechar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            var ans = MessageBox.Show("Fechar disco atual?", "Fechar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (ans != DialogResult.Yes) return;
             data = Array.Empty<byte>();
             currentPath = null;
             selectedDrive = null;
             grid.Rows.Clear();
-            statusLabel.Text = "Nenhum arquivo/disco carregado";
+            statusLabel.Text = "Nenhum disco carregado";
             prevSectorBtn.Enabled = false;
             nextSectorBtn.Enabled = false;
-            saveBtn.Enabled = false; // DESABILITA SALVAR
+            saveBtn.Enabled = false;
         }
 
         private void SaveBtn_Click(object? sender, EventArgs e)
         {
+            // verificação simples se um disco está selecionado
             if (selectedDrive != null)
             {
-                // ** Ação Perigosa: Salvar diretamente no setor do disco **
+                // Mensagem de aviso
                 var res = MessageBox.Show($"ATENÇÃO: Você está prestes a ESCREVER os dados editados no Setor {currentSector} do disco {selectedDrive.Name}.\nIsso pode corromper o sistema de arquivos ou o boot loader.\nVocê tem certeza que deseja continuar?",
                                           "CONFIRMAÇÃO DE ESCRITA DE DISCO", MessageBoxButtons.YesNo, MessageBoxIcon.Stop);
                 if (res != DialogResult.Yes) return;
@@ -262,13 +262,9 @@ namespace DiskEditor
                 return;
             }
 
-            // Lógica de salvamento de arquivo (mantida)
-            // ... (código para salvar em arquivo)
+         
         }
 
-        // =========================================================================
-        // === MÉTODOS DE ACESSO DE BAIXO NÍVEL: LEITURA E ESCRITA ===
-        // =========================================================================
 
         private bool ReadSector(int sectorNumber)
         {
@@ -279,11 +275,12 @@ namespace DiskEditor
 
             try
             {
-                // Acesso de leitura (FileAccess.Read)
+                // Acesso de leitura
                 using var fs = new FileStream(
                     @"\\.\" + selectedDrive.Name.TrimEnd('\\'),
                     FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
 
+                // vai para o setor desejado
                 fs.Seek(currentOffset, SeekOrigin.Begin);
                 data = new byte[SECTOR_SIZE];
                 int bytesRead = fs.Read(data, 0, SECTOR_SIZE);
@@ -297,14 +294,14 @@ namespace DiskEditor
                 statusLabel.Text = $"{selectedDrive.Name} - Setor {currentSector} (Offset 0x{currentOffset:X})";
 
                 prevSectorBtn.Enabled = currentSector > 0;
-                // nextSectorBtn permanece ativado se o disco tiver espaço total maior que o offset atual
                 if (selectedDrive.IsReady && selectedDrive.TotalSize > (currentOffset + SECTOR_SIZE))
                     nextSectorBtn.Enabled = true;
                 else
-                    nextSectorBtn.Enabled = true; // Para fins de demonstração
+                    nextSectorBtn.Enabled = true;
 
                 return true;
             }
+             // tratamento de exeção
             catch (UnauthorizedAccessException)
             {
                 MessageBox.Show($"Permissão negada para acessar o drive {selectedDrive.Name}. Execute como Administrador.", "Erro de Permissão", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -313,7 +310,7 @@ namespace DiskEditor
                 statusLabel.Text = $"{selectedDrive.Name} - Setor {currentSector} (Leitura Falhou - ADMINISTRADOR?)";
                 prevSectorBtn.Enabled = false;
                 nextSectorBtn.Enabled = false;
-                saveBtn.Enabled = false; // Desativa salvar se não puder ler
+                saveBtn.Enabled = false;
                 return false;
             }
             catch (Exception ex)
@@ -330,17 +327,19 @@ namespace DiskEditor
 
             try
             {
-                // Acesso de escrita (FileAccess.Write)
+                // Acesso de escrita
                 using var fs = new FileStream(
                     @"\\.\" + selectedDrive.Name.TrimEnd('\\'),
-                    FileMode.Open, FileAccess.Write, FileShare.ReadWrite); // Note FileAccess.Write
+                    FileMode.Open, FileAccess.Write, FileShare.ReadWrite);
 
                 fs.Seek(currentOffset, SeekOrigin.Begin);
+                // escreve os dados do setor
                 fs.Write(data, 0, SECTOR_SIZE);
 
                 MessageBox.Show($"Setor {sectorNumber} escrito com sucesso no disco {selectedDrive.Name}.", "Escrita OK", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 statusLabel.Text = $"{selectedDrive.Name} - Setor {currentSector} (Offset 0x{currentOffset:X}) - SALVO!";
             }
+            //Tratamento de exceção
             catch (UnauthorizedAccessException)
             {
                 MessageBox.Show($"Permissão negada para escrever no drive {selectedDrive.Name}. Execute como Administrador.", "Erro de Permissão", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -351,8 +350,8 @@ namespace DiskEditor
             }
         }
 
-        // ... (PrevSectorBtn_Click, NextSectorBtn_Click - mantidos)
-
+        
+        // click do botão anterior
         private void PrevSectorBtn_Click(object? sender, EventArgs e)
         {
             if (currentSector > 0)
@@ -361,32 +360,30 @@ namespace DiskEditor
             }
         }
 
+        //click botão próximo
         private void NextSectorBtn_Click(object? sender, EventArgs e)
         {
             ReadSector(currentSector + 1);
         }
 
-        // =========================================================================
-        // === MÉTODOS DE EDIÇÃO (ALTERADO PARA PERMITIR EDIÇÃO EM DISCO) ===
-        // =========================================================================
+        
 
         private void Grid_CellEndEdit(object? sender, DataGridViewCellEventArgs e)
         {
-            // O código de validação e atualização do byte no array 'data'
-            // AGORA É EXECUTADO MESMO QUE selectedDrive != null.
-
+            // só permite que a edição aconteca nas colunas hexadecimais e pega o texto digitado
             if (e.RowIndex < 0 || e.ColumnIndex < 1 || e.ColumnIndex > BYTES_PER_ROW) return;
             var cell = grid.Rows[e.RowIndex].Cells[e.ColumnIndex];
-            var s = (cell.Value ?? "").ToString()!.Trim();
+            var s = (cell.Value ?? "").ToString()!.Trim();// garante que o valor não seja nulo
             s = string.Concat(s.Where(ch => !char.IsWhiteSpace(ch)));
 
+            // se por acaso for apagado tudo, volta ao byte original
             if (s.Length == 0)
             {
                 int idx = e.RowIndex * BYTES_PER_ROW + (e.ColumnIndex - 1);
                 if (idx < data.Length) cell.Value = data[idx].ToString("X2");
                 return;
             }
-
+            // validação regex no formato hexadecimal
             if (!System.Text.RegularExpressions.Regex.IsMatch(s, "^(?:[0-9A-Fa-f]{1,2})$"))
             {
                 MessageBox.Show("Entrada inválida. Use 1 ou 2 dígitos hex (0-9, A-F).", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -394,9 +391,9 @@ namespace DiskEditor
                 if (idr < data.Length) cell.Value = data[idr].ToString("X2");
                 return;
             }
-
+            // se tiver apenas um digito, adiciona um zero antes
             if (s.Length == 1) s = "0" + s;
-            int val = Convert.ToInt32(s, 16);
+            int val = Convert.ToInt32(s, 16); // converção de hex para numero
             int dataIndex = e.RowIndex * BYTES_PER_ROW + (e.ColumnIndex - 1);
             if (dataIndex >= data.Length)
             {
@@ -405,7 +402,7 @@ namespace DiskEditor
                 return;
             }
 
-            // ** ATUALIZAÇÃO DO BYTE NO BUFFER **
+            
             data[dataIndex] = (byte)val;
             cell.Value = val.ToString("X2");
 
@@ -426,14 +423,12 @@ namespace DiskEditor
             statusLabel.Text = $"Editado offset global 0x{currentOffset + dataIndex:X8} -> {val:X2}. Pressione SALVAR para escrever no disco.";
         }
 
+        //praticidade entende que dois clicks tamber é para editar
         private void Grid_CellDoubleClick(object? sender, DataGridViewCellEventArgs e)
         {
-            // Permite edição de células de dados hexadecimais
             if (e.ColumnIndex >= 1 && e.ColumnIndex <= BYTES_PER_ROW)
                 grid.BeginEdit(true);
         }
-
-        // ... (PopulateGrid, GotoBtn_Click, FindBtn_Click e métodos auxiliares - mantidos)
 
         private void PopulateGrid()
         {
@@ -465,6 +460,7 @@ namespace DiskEditor
             }
         }
 
+        // botão para ir direto a um setor expecifico
         private void GotoBtn_Click(object? sender, EventArgs e)
         {
             if (data.Length == 0) return;
@@ -528,18 +524,19 @@ namespace DiskEditor
             }
         }
 
+        // busca um padrão de bytes em hex se achar ele mostra
         private void FindBtn_Click(object? sender, EventArgs e)
         {
             var pattern = (findBox.Text ?? "").Trim().Replace(" ", "");
             if (string.IsNullOrEmpty(pattern)) return;
 
-            if (!System.Text.RegularExpressions.Regex.IsMatch(pattern, "^(?:[0-9A-Fa-f]{2})+$"))
+            if (!System.Text.RegularExpressions.Regex.IsMatch(pattern, "^(?:[0-9A-Fa-f]{2})+$")) // verifica se tem apenas pares hex
             {
                 MessageBox.Show("Digite pares hex válidos, ex: DEADBEEF", "Erro", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            byte[] pat = new byte[pattern.Length / 2];
+            byte[] pat = new byte[pattern.Length / 2]; // converte hex para array de bytes
             for (int i = 0; i < pat.Length; i++) pat[i] = Convert.ToByte(pattern.Substring(i * 2, 2), 16);
             int idx = IndexOf(data, pat);
 
@@ -557,6 +554,7 @@ namespace DiskEditor
                 MessageBox.Show("Padrão não encontrado no setor atual.", "Resultado", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
+        // ajuda na busca
         private static int IndexOf(byte[] data, byte[] pat)
         {
             if (pat.Length == 0 || data.Length < pat.Length) return -1;
@@ -570,6 +568,7 @@ namespace DiskEditor
             return -1;
         }
 
+        // apenas uma formatação de bytes para KB,MB, GB dependendo do tamanho
         private static string HumanReadable(long bytes)
         {
             long unit = 1024;
