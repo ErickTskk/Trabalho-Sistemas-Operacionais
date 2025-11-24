@@ -1,0 +1,42 @@
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.exe
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.deps.json
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.runtimeconfig.json
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.dll
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.pdb
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.AssemblyInfoInputs.cache
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.AssemblyInfo.cs
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.csproj.CoreCompileInputs.cache
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.dll
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\refint\DiskEditor.dll
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.pdb
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.genruntimeconfig.cache
+C:\Users\erick.teske\Downloads\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\ref\DiskEditor.dll
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.exe
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.deps.json
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.runtimeconfig.json
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.dll
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.pdb
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.AssemblyInfoInputs.cache
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.AssemblyInfo.cs
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.csproj.CoreCompileInputs.cache
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.dll
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\refint\DiskEditor.dll
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.pdb
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.genruntimeconfig.cache
+C:\Users\erick\Desktop\6 Semestre\DiskEditor\DiskEditor\obj\Debug\net8.0-windows\ref\DiskEditor.dll
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.exe
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.deps.json
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.runtimeconfig.json
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.dll
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\bin\Debug\net8.0-windows\DiskEditor.pdb
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.AssemblyInfoInputs.cache
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.AssemblyInfo.cs
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.csproj.CoreCompileInputs.cache
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.dll
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\obj\Debug\net8.0-windows\refint\DiskEditor.dll
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.pdb
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\obj\Debug\net8.0-windows\DiskEditor.genruntimeconfig.cache
+C:\Users\erick.teske\Downloads\Trab---Sistemas-Operacionais-main\Trab---Sistemas-Operacionais-main\DiskEditor\obj\Debug\net8.0-windows\ref\DiskEditor.dll
